@@ -15,7 +15,7 @@ function TweetLengthMsg(props) {
 }
 
 // text area to type tweet
-function TweetBox(props) {
+function TweetText(props) {
   const msg = props.tweet_msg;
   const handleChange = props.handleChange;
 
@@ -29,7 +29,7 @@ function TweetBox(props) {
 }
 
 // class to put every single component together
-class Tweet extends React.Component {
+class TweetBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +51,7 @@ class Tweet extends React.Component {
   render() {
     return (
       <div>
-        <TweetBox tweet_msg={this.state.tweet_msg} handleChange={this.handleChange}/>
+        <TweetText tweet_msg={this.state.tweet_msg} handleChange={this.handleChange}/>
         <TweetLengthMsg tweet_msg={this.state.tweet_msg} />
       </div>
     )
@@ -59,4 +59,4 @@ class Tweet extends React.Component {
 
 }
 
-export default Tweet;
+export default TweetBox;

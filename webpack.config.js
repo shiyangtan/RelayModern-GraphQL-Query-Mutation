@@ -1,7 +1,7 @@
 var webpack = require('webpack')
 var path = require('path')
 
-const source_dir = path.resolve(__dirname, 'React')
+const source_dir = path.resolve(__dirname, 'Relay')
 const build_dir = path.resolve(__dirname, 'build')
 
 const config = {
