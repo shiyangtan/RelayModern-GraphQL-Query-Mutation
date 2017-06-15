@@ -1,24 +1,32 @@
 import React from 'react';
-
-// component to display a single tweet message
-function SingleTweet (props) {
-  const tweetMsg = props.tweetMsg;
-
-  return (
-    <div>
-      <p>{tweetMsg}</p>
-    </div>
-  )
-}
+import {QueryRenderer, graphql} from 'react-relay';
+import Tweet from './Tweet';
+import environment from './environment';
 
 // class to get tweet message from server
 class TweetList extends React.Component {
   render() {
-    return (
-      <div>
-        <SingleTweet tweetMsg="Hi" />
-      </div>
-    )
+    <QueryRenderer
+      environment={environment}
+      query={graphql`
+        query TweetListQuery {
+          tweet {
+            ...Tweet
+          }
+        }
+      `}
+      render={({error, props}) => {
+        if (error) {
+          return <div>{error.message}</div>;
+        } else if (props) {
+          return (
+            <div>{props.tweet.map(tweet => <Tweet data={tweet} />)}</div>
+          );
+        } else {
+          return <div>Loading</div>;
+        }
+      }}
+    />
   }
 }
 

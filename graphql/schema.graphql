@@ -1,0 +1,8 @@
+type Query {
+  tweet: [Tweet]
+  sayHi: String
+}
+
+type Tweet {
+  tweet: String
+}

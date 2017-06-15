@@ -19,6 +19,13 @@ var queryType = new graphql.GraphQLObjectType({
       resolve: () => {
         return [{tweet: "First string"}, {tweet: "Second string"}];
       },
+    },
+
+    sayHi: {
+      type: graphql.GraphQLString,
+      resolve: () => {
+        return 'Hi from GraphQL';
+      }
     }
   },
 });
