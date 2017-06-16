@@ -1,5 +1,8 @@
 const graphql = require('graphql');
 
+// some dummy data
+var tweetArray = [{tweet: "First tweet"}, {tweet: "Second tweet"}];
+
 // define tweet type
 var tweetType = new graphql.GraphQLObjectType({
   name: "Tweet",
@@ -17,7 +20,7 @@ var queryType = new graphql.GraphQLObjectType({
     tweet: {
       type: new graphql.GraphQLList(tweetType),
       resolve: () => {
-        return [{tweet: "First string"}, {tweet: "Second string"}];
+        return tweetArray;
       },
     },
 
@@ -30,6 +33,24 @@ var queryType = new graphql.GraphQLObjectType({
   },
 });
 
+// define mutation type
+var mutationType = new graphql.GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    insertTweet: {
+      type: tweetType,
+      args: {
+        tweet: {type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
+      },
+      resolve: (_, {tweet}) => {
+        tweetArray.push({tweet: tweet});
+        return tweetArray[tweetArray.length - 1];
+      },
+    },
+  },
+});
+
 module.exports = new graphql.GraphQLSchema({
-  query: queryType
+  query: queryType,
+  mutation: mutationType
 });
