@@ -6,22 +6,8 @@ import SayHi from './SayHi'
 
 ReactDOM.render(
   <div>
-    <SayHi />
+    <TweetBox />
+    <TweetList />
   </div>,
   document.getElementById('root')
 )
-
-
-// import {graphql, fetchQuery} from 'relay-runtime';
-// import environment from './environment';
-//
-// fetchQuery(environment, graphql`
-//   query TweetListQuery {
-//     sayHi
-//   }
-// `).then((data) => {
-//   ReactDOM.render(
-//     <div>{data.sayHi}</div>,
-//     document.getElementById('root')
-//   )
-// });
