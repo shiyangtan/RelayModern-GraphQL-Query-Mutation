@@ -1,3 +1,7 @@
+type Mutation {
+  insertTweet(input: TweetInputType): Tweet
+}
+
 type Query {
   tweet: [Tweet]
   sayHi: String
@@ -5,4 +9,8 @@ type Query {
 
 type Tweet {
   tweet: String
+}
+
+input TweetInputType {
+  tweet: String!
 }

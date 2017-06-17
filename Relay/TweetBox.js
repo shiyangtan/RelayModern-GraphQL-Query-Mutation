@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import {commitMutation, graphql} from 'react-relay';
+import environment from './environment';
 
 // maximum length of tweet message allowed
 const MAX_TWEET_LENGTH = 30;
@@ -28,6 +30,15 @@ function TweetText(props) {
   );
 }
 
+// button to submit tweet to server
+function SubmitTweet(props) {
+  const handleClick = props.handleClick;
+
+  return (
+    <button type="button" onClick={handleClick}>Submit</button>
+  );
+}
+
 // class to put every single component together
 class TweetBox extends React.Component {
   constructor(props) {
@@ -48,11 +59,40 @@ class TweetBox extends React.Component {
     });
   }
 
+  // function to submit tweet to server when button is clicked
+  handleClick = () => {
+    const mutation = graphql`
+      mutation TweetBoxMutation($input: TweetInputType!) {
+        insertTweet(input: $input) {
+          tweet
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        tweet: this.state.tweet_msg
+      }
+    };
+
+    commitMutation(environment, {
+      mutation,
+      variables,
+      onCompleted: (response) => {
+        console.log("Success!")
+      },
+      onError: (err) => {
+        console.log("err")
+      }
+    });
+  }
+
   render() {
     return (
       <div>
         <TweetText tweet_msg={this.state.tweet_msg} handleChange={this.handleChange}/>
         <TweetLengthMsg tweet_msg={this.state.tweet_msg} />
+        <SubmitTweet handleClick={this.handleClick} />
       </div>
     )
   }

@@ -33,6 +33,14 @@ var queryType = new graphql.GraphQLObjectType({
   },
 });
 
+// define input type for tweet
+var tweetInputType = new graphql.GraphQLInputObjectType({
+  name: "TweetInputType",
+  fields: {
+    tweet: {type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
+  },
+});
+
 // define mutation type
 var mutationType = new graphql.GraphQLObjectType({
   name: "Mutation",
@@ -40,10 +48,10 @@ var mutationType = new graphql.GraphQLObjectType({
     insertTweet: {
       type: tweetType,
       args: {
-        tweet: {type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
+        input: {type: tweetInputType},
       },
-      resolve: (_, {tweet}) => {
-        tweetArray.push({tweet: tweet});
+      resolve: (_, {input}) => {
+        tweetArray.push({tweet: input.tweet});
         return tweetArray[tweetArray.length - 1];
       },
     },
